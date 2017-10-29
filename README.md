@@ -5,6 +5,7 @@
 This was done as a way to demonstrate building a medium complexity system as a Frontend Engineer using React and Redux with an agile process.
 
 *tldr; heres some code*
+
 [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
 
 [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
