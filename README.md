@@ -2,16 +2,14 @@
 
 *Interview discussion project, not a real product*
 
-This was done as a way to demonstrate building a medium complexity system as a Frontend Engineer using React and Redux using an agile process.
+This was done as a way to demonstrate building a medium complexity system as a Frontend Engineer using React and Redux with an agile process.
 
-Comments store [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+*tldr; heres some code*
+[CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+[CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+[CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
 
-Comments middleware [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
-
-Comments components [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
-
-
-## Product Ask ##
+# Scenario #
 
 We want comments on our product pages. This will help engagement and allow our users to discuss the product with their friends!
 
@@ -166,7 +164,7 @@ function fetchComments(dispatch, productId) {
 export default CommentsMiddleware;
 ```
 
-At this point once I have the full flow working I add enough CSS and JS to try and have a working demo to show to other stakeholders. Getting feedback early helps shake out UX issues that may not have been captured in a static mockup.
+Once I have the full flow working I add enough CSS and JS to give a working demo to show to other stakeholders. Getting feedback early helps shake out UX issues that may not have been captured in a static mockup.
 
 Assuming the demo shows we're on the right path I add tests to the critical paths, start on the real CSS and start breaking out my prototype component into manageable chunks.
 
