@@ -4,6 +4,12 @@
 
 This was done as a way to demonstrate building a medium complexity system as a Frontend Engineer using React and Redux using an agile process.
 
+Finished Comment store [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+
+Finished Comments middleware [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+
+Finished Comments components [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
+
 ## Product Ask ##
 
 We want comments on our product pages. This will help engagement and allow our users to discuss the product with their friends!
@@ -17,7 +23,7 @@ Once you've ensured mockups and acceptance criteria tell the same story start pl
 ## State and Component Design ##
 
 Using the mockups and acceptance criteria as a guide I build a quick prototype version of the Comment component.
-```
+```javascript
 export default class Comments extends React.PureComponent {
   render() {
     return (
@@ -39,7 +45,7 @@ export default class Comments extends React.PureComponent {
 This helps identify what belongs in the redux store and how to best structure the data. 
 
 In this particular instance another team will be building the backend component so I stub as much data as I can to keep myself unblocked and moving forward. 
-```
+```javascript
 // TODO plug in real API
 fetchComments(productId) {
   return {
@@ -60,7 +66,7 @@ I then start to build the redux store by looking at what actions are required an
 * Delete your comment
 
 Comment Store
-```
+```json
 {
   byProductId: {
     prd123: {
@@ -74,7 +80,7 @@ Comment Store
 ```
 
 Comment Structure
-```
+```json
 {
   avatar: <string>,
   name: <string>,
@@ -85,7 +91,7 @@ Comment Structure
 The fake store has a single product `prd123` with a single comment `cid123`. I've structured the store with separate `order` and `byId` fields to allow easier sorting via a transformComments function. If you're using typeScript or flow you'll want to ensure your data is properly typed here as well.
 
 After I've built enough of the store I go back and hook it up to my component.
-```
+```javascript
 import { getComments } from 'CommentsSt'
 export default class Comments extends React.PureComponent {
   componentDidMount() {
@@ -122,7 +128,7 @@ export default connect(mapStateToProps, { getComments })(Comments);
 ```
 
 And since we'll be dealing with an API we'll need a middleware for handling actions with side effects
-```
+```javascript
 import { COMMENTS_REQUEST, commentsAvailable } from 'modules/CommentsModule';
 
 const CommentsMiddleware = store => next => action => {
@@ -160,13 +166,6 @@ export default CommentsMiddleware;
 At this point I add enough CSS and JS to try and have a working demo to show to other stakeholders. Also, getting feedback early helps shake out UX issues that may not have been captured in a static mockup.
 
 Assuming the demo shows we're on the right path I add tests to the critical paths, start on the real CSS and start breaking out my prototype component into manageable chunks.
-
-# Links to example code #
-*Finished Comment store* [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
-
-*Finished Comments middleware* [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
-
-*Finished Comments components* [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
 
 ## Other considerations ##
 
