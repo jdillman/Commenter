@@ -8,7 +8,7 @@ This was done as a way to demonstrate building a medium complexity system as a F
 
 [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
 
-[CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+[CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsMiddleware.js)
 
 [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
 
