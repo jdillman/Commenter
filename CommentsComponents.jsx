@@ -18,7 +18,7 @@ export function Comment(props) {
       </div>
       <p>
         <a href={profileUrl} className="author">{name}</a>
-        <DecoratedString string={comment.body} tags={comment.tags} />
+        <DecoratedString string={comment.text} />
       </p>
     </div>
   );
@@ -73,12 +73,11 @@ export default class CommentList extends React.PureComponent {
   }
 
   render() {
-    const { comments, inviting, showInvite, userId } = this.props;
+    const { comments, userId } = this.props;
     const hasComments = (comments && comments.length);
 
     const mainClass = classnames('main-section', {
       'has-comments': hasComments,
-      inviting,
     });
 
     const content = (!hasComments)

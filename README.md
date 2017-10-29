@@ -4,11 +4,12 @@
 
 This was done as a way to demonstrate building a medium complexity system as a Frontend Engineer using React and Redux using an agile process.
 
-Finished Comment store [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+Comments store [CommentsStore](https://github.com/jdillman/example/blob/master/CommentsStore.js)
 
-Finished Comments middleware [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
+Comments middleware [CommentsMiddleware](https://github.com/jdillman/example/blob/master/CommentsStore.js)
 
-Finished Comments components [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
+Comments components [CommentsComponents](https://github.com/jdillman/example/blob/master/CommentsComponents.jsx)
+
 
 ## Product Ask ##
 
@@ -68,11 +69,11 @@ I then start to build the redux store by looking at what actions are required an
 Comment Store
 ```json
 {
-  byProductId: {
-    prd123: {
-      order: ['cid123'],
-      byId: {
-        cid123: { ... },
+  "byProductId": {
+    "prd123": {
+      "order": ["cid123"],
+      "byId": {
+        "cid123": { ... },
       },
     },
   },
@@ -82,17 +83,17 @@ Comment Store
 Comment Structure
 ```json
 {
-  avatar: <string>,
-  name: <string>,
-  text: <string>,
-  created: <timestamp>,
+  "avatar": <String>,
+  "name": <String>,
+  "text": <String>,
+  "created": <Timestamp>,
 }
 ```
 The fake store has a single product `prd123` with a single comment `cid123`. I've structured the store with separate `order` and `byId` fields to allow easier sorting via a transformComments function. If you're using typeScript or flow you'll want to ensure your data is properly typed here as well.
 
 After I've built enough of the store I go back and hook it up to my component.
 ```javascript
-import { getComments } from 'CommentsSt'
+import { getComments } from "CommentsStore"
 export default class Comments extends React.PureComponent {
   componentDidMount() {
     this.props.getComments(this.props.feedId);
@@ -129,7 +130,7 @@ export default connect(mapStateToProps, { getComments })(Comments);
 
 And since we'll be dealing with an API we'll need a middleware for handling actions with side effects
 ```javascript
-import { COMMENTS_REQUEST, commentsAvailable } from 'modules/CommentsModule';
+import { COMMENTS_REQUEST, commentsAvailable } from 'CommentsStore';
 
 const CommentsMiddleware = store => next => action => {
   dispatch = store.dispatch;
@@ -145,7 +146,7 @@ const CommentsMiddleware = store => next => action => {
   return next(action);
 };
 
-function fetchComments(productId) {
+function fetchComments(dispatch, productId) {
   const fetchInit = {
     method: 'GET',
     mode: 'cors',

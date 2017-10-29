@@ -3,7 +3,7 @@ import {
   COMMENTS_REQUEST,
   commentsAvailable,
   addComment,
-} from 'modules/CommentsModule';
+} from 'CommentsStore';
 
 let dispatch = null;
 
@@ -37,8 +37,9 @@ function createComment(productId, comment) {
     credentials: 'include',
   };
 
-  const url = 'http://localhost/comments/:productId/create';
-  return playsFetch(url, fetchInit)
+  const url = getUrl('http://localhost/comments/:productId/create', productId);
+  return fetch(url, fetchInit)
+    .then(response => response.json())
     .then((response) => {
       const _comment = response.data;
       const id = _comment.id;
@@ -54,10 +55,11 @@ function fetchComments(productId) {
     credentials: 'include',
   };
 
-  const url = 'http://localhost/comments/:productId';
+  const url = getUrl('http://localhost/comments/:productId', productId);
   return fetch(url, fetchInit)
+    .then(response => response.json())
     .then((response) => {
-      dispatch(commentsAvailable(feedId, decorateComments(response.data)));
+      dispatch(commentsAvailable(productId, decorateComments(response.data)));
     });
 }
 
