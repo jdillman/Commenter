@@ -13,10 +13,10 @@ const CommentsMiddleware = store => next => action => {
 
   switch (action.type) {
   case COMMENTS_CREATE:
-    createComment(action.feedId, action.comment);
+    createComment(action.productId, action.comment);
     break;
   case COMMENTS_REQUEST:
-    fetchComments(action.feedId);
+    fetchComments(action.productId);
     break;
   default:
     break;

@@ -4,6 +4,7 @@ import { FormattedMessage as Str } from 'react-intl';
 import { getUrl } from 'conf/urls.js';
 import DecoratedString from 'components/shared/DecoratedString';
 import EditMenu from 'components/shared/EditMenu';
+import { getComments, deleteComment } from 'CommentsStore';
 
 export function Comment(props) {
   const comment = props.comment;
@@ -91,3 +92,14 @@ export default class CommentList extends React.PureComponent {
     );
   }
 }
+
+function mapStateToProps(state, props) {
+  const comments = state.comments.byProductId[props.productId];
+  return {
+    comments: comments.order.map(id =>
+      Object.assign({}, comments.byId[id])
+    ),
+  }
+}
+
+export default connect(mapStateToProps, { getComments, deleteComment })(Comments);

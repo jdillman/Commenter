@@ -23,7 +23,7 @@ Once you've ensured mockups and acceptance criteria tell the same story start pl
 
 ## State and Component Design ##
 
-Using the mockups and acceptance criteria as a guide I build a quick prototype version of the Comment component.
+Using the mockups and acceptance criteria as a guide I build a quick prototype version of the Comments component.
 ```javascript
 export default class Comments extends React.PureComponent {
   render() {
@@ -33,8 +33,9 @@ export default class Comments extends React.PureComponent {
         this.props.comments.map((comment) => (
           <div className="comment"
             <img src={comment.avatar} />
-            <span>{author}</span>
-            <p>{comment}</p>
+            <span>{comment.author}</span>
+            <p>{comment.text}</p>
+            <button onClick={() => console.log('deleted')}>Delete</button>
           </div>
         ))
       }
@@ -43,28 +44,19 @@ export default class Comments extends React.PureComponent {
   }
 }
 ```
-This helps identify what belongs in the redux store and how to best structure the data. 
+This helps identify what is state and what is just UI and what actions will be needed.
 
-In this particular instance another team will be building the backend component so I stub as much data as I can to keep myself unblocked and moving forward. 
-```javascript
-// TODO plug in real API
-fetchComments(productId) {
-  return {
-    cid123: {
-      avatar: 'https://example.com/avatar.png',
-      author: 'jon',
-      text: 'Comment text',
-      created: 1508869014,
-    }
-  };
+Next i start building the data store
+
+Comment Structure
+```json
+{
+  "avatar": <String>,
+  "name": <String>,
+  "text": <String>,
+  "created": <Timestamp>,
 }
 ```
-I then start to build the redux store by looking at what actions are required and how to best structure the comment data.
-
-* Fetch all comments for a productId
-* Sortable by date
-* Add your own comment
-* Delete your comment
 
 Comment Store
 ```json
@@ -80,15 +72,21 @@ Comment Store
 }
 ```
 
-Comment Structure
-```json
-{
-  "avatar": <String>,
-  "name": <String>,
-  "text": <String>,
-  "created": <Timestamp>,
+In this particular instance another team will be building the backend component so I stub as much data as I can to keep myself unblocked and moving forward. 
+```javascript
+// TODO plug in real API
+fetchComments(productId) {
+  return {
+    cid123: {
+      avatar: 'https://example.com/avatar.png',
+      author: 'jon',
+      text: 'Comment text',
+      created: 1508869014,
+    }
+  };
 }
 ```
+
 The fake store has a single product `prd123` with a single comment `cid123`. I've structured the store with separate `order` and `byId` fields to allow easier sorting via a transformComments function. If you're using typeScript or flow you'll want to ensure your data is properly typed here as well.
 
 After I've built enough of the store I go back and hook it up to my component.
@@ -96,7 +94,11 @@ After I've built enough of the store I go back and hook it up to my component.
 import { getComments } from "CommentsStore"
 export default class Comments extends React.PureComponent {
   componentDidMount() {
-    this.props.getComments(this.props.feedId);
+    this.props.getComments(this.props.productId);
+  }
+
+  deleteComment = () => {
+    this.props.deleteComment(this.props.)
   }
 
   render() {
@@ -108,6 +110,7 @@ export default class Comments extends React.PureComponent {
             <img src={comment.avatar} />
             <span>{author}</span>
             <p>{comment}</p>
+            <button onClick={this.deleteComment}>Delete</button>
           </div>
         ))
       }
@@ -119,8 +122,8 @@ export default class Comments extends React.PureComponent {
 function mapStateToProps(state, props) {
   const comments = state.comments.byProductId[props.productId];
   return {
-    comments: state.comments.order.map(id =>
-      Object.assign({}, commentsByFeed.byId[id])
+    comments: comments.order.map(id =>
+      Object.assign({}, comments.byId[id])
     ),
   }
 }
