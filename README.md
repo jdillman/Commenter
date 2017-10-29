@@ -46,9 +46,8 @@ export default class Comments extends React.PureComponent {
 ```
 This helps identify what is state and what is just UI and what actions will be needed.
 
-Next i start building the data store
+Next i mock out the comment structure and data store. Assuming I'll be using an API for the actual data I also like to write a decorate function that transforms the data into something sane to work with, handling sanity checks as soon as the data comes into your system tends to work best.
 
-Comment Structure
 ```json
 {
   "avatar": <String>,
@@ -91,14 +90,14 @@ The fake store has a single product `prd123` with a single comment `cid123`. I'v
 
 After I've built enough of the store I go back and hook it up to my component.
 ```javascript
-import { getComments } from "CommentsStore"
+import { getComments, deleteComment } from "CommentsStore"
 export default class Comments extends React.PureComponent {
   componentDidMount() {
     this.props.getComments(this.props.productId);
   }
 
   deleteComment = () => {
-    this.props.deleteComment(this.props.)
+    this.props.deleteComment(this.props.productId)
   }
 
   render() {
@@ -167,7 +166,7 @@ function fetchComments(dispatch, productId) {
 export default CommentsMiddleware;
 ```
 
-At this point I add enough CSS and JS to try and have a working demo to show to other stakeholders. Also, getting feedback early helps shake out UX issues that may not have been captured in a static mockup.
+At this point once I have the full flow working I add enough CSS and JS to try and have a working demo to show to other stakeholders. Getting feedback early helps shake out UX issues that may not have been captured in a static mockup.
 
 Assuming the demo shows we're on the right path I add tests to the critical paths, start on the real CSS and start breaking out my prototype component into manageable chunks.
 
